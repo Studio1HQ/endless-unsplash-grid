@@ -1,7 +1,4 @@
-
-// Create a random client ID for demo purposes
-// In production, you should use a proper Unsplash API key
-const DEMO_CLIENT_ID = 'demo';
+const UNSPLASH_CLIENT_ID = import.meta.env.VITE_UNSPLASH_CLIENT_ID || 'demo';
 
 interface UnsplashPhoto {
   id: string;
@@ -22,7 +19,7 @@ interface UnsplashPhoto {
 export async function fetchUnsplashPhotos(page = 1, perPage = 10): Promise<UnsplashPhoto[]> {
   try {
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?client_id=${DEMO_CLIENT_ID}&count=${perPage}`,
+      `https://api.unsplash.com/photos/random?client_id=${UNSPLASH_CLIENT_ID}&count=${perPage}`,
       {
         headers: {
           'Accept-Version': 'v1',

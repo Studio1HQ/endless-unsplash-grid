@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Masonry from 'react-masonry-css';
 import { fetchUnsplashPhotos, UnsplashPhoto } from '../services/unsplashService';
@@ -19,31 +18,15 @@ const MasonryGrid = () => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const observer = useRef<IntersectionObserver | null>(null);
+  const loadingRef = useRef(false);
   
-  // Ref for the sentinel element (last item in the list)
-  const lastImageRef = useCallback((node: HTMLDivElement | null) => {
-    if (loading) return;
-    
-    if (observer.current) {
-      observer.current.disconnect();
-    }
-    
-    observer.current = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting && hasMore) {
-        setPage(prevPage => prevPage + 1);
-      }
-    });
-    
-    if (node) {
-      observer.current.observe(node);
-    }
-  }, [loading, hasMore]);
-
   const loadImages = useCallback(async () => {
-    if (loading || !hasMore) return;
+    if (loadingRef.current || !hasMore) return;
     
     try {
       setLoading(true);
+      loadingRef.current = true;
+      
       const newPhotos = await fetchUnsplashPhotos(page);
       
       if (newPhotos.length === 0) {
@@ -56,11 +39,33 @@ const MasonryGrid = () => {
       toast.error('Failed to load images. Please try again later.');
     } finally {
       setLoading(false);
+      loadingRef.current = false;
     }
-  }, [page, loading, hasMore]);
+  }, [page, hasMore]);
+
+  // Ref for the sentinel element (last item in the list)
+  const lastImageRef = useCallback((node: HTMLDivElement | null) => {
+    if (loading) return;
+    
+    if (observer.current) {
+      observer.current.disconnect();
+    }
+    
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore && !loadingRef.current) {
+        setPage(prevPage => prevPage + 1);
+      }
+    }, {
+      rootMargin: '100px',
+      threshold: 0.1
+    });
+    
+    if (node) {
+      observer.current.observe(node);
+    }
+  }, [loading, hasMore]);
 
   useEffect(() => {
-    console.log("page", page);
     loadImages();
   }, [page, loadImages]);
 
@@ -85,7 +90,7 @@ const MasonryGrid = () => {
       </Masonry>
 
       {loading && (
-        <div className="loading-spinner py-8">
+        <div className="loading-spinner py-8 flex justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
       )}
