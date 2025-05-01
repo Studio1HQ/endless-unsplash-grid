@@ -109,22 +109,15 @@
   object-fit: cover;
 }
 
-.toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.toolbar.dark {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-}
-
-.toolbar.light {
-  background-color: rgba(255, 255, 255, 0.85);
-  color: black;
+/* Vercel-style Toolbar */
+.toolbar-floating {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 /* Infinite Scroll Loading Indicator */
@@ -166,3 +159,4 @@
     background-position: -200% 0;
   }
 }
+

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Settings, MessageSquare, User, Sun, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 interface ToolbarProps {
   className?: string;
@@ -34,68 +35,55 @@ const Toolbar = ({ className }: ToolbarProps) => {
   };
 
   return (
-    <header
-      className={cn(
-        "toolbar sticky top-0 z-50 w-full px-4 py-3 border-b shadow-sm backdrop-blur-md",
-        isDarkMode ? "dark border-gray-800" : "border-gray-200",
-        className
-      )}
-    >
-      <div className="container mx-auto flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          {/* Environment Indicator */}
-          <div className="px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-sm font-bold rounded-full">
-            Masonry Gallery
-          </div>
-        </div>
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
+      <div 
+        className={cn(
+          "flex items-center space-x-1 px-3 py-2 rounded-full bg-black/80 backdrop-blur-md border border-white/10 shadow-lg",
+          isDarkMode ? "dark" : "",
+          className
+        )}
+      >
+        {/* Comments Button */}
+        <Button 
+          variant="ghost" 
+          size="icon"
+          onClick={() => showNotImplemented('Comments')}
+          className="rounded-full text-gray-300 hover:text-white hover:bg-white/10"
+        >
+          <MessageSquare className="h-5 w-5" />
+        </Button>
 
-        <div className="flex items-center space-x-2">
-          {/* Comments Button */}
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => showNotImplemented('Comments')}
-            className="rounded-full"
-          >
-            <MessageSquare className="h-5 w-5" />
-          </Button>
+        {/* Dark Mode Toggle */}
+        <Button 
+          variant="ghost" 
+          size="icon"
+          onClick={toggleDarkMode}
+          className="rounded-full text-gray-300 hover:text-white hover:bg-white/10"
+        >
+          {isDarkMode ? (
+            <Sun className="h-5 w-5" />
+          ) : (
+            <Moon className="h-5 w-5" />
+          )}
+        </Button>
 
-          {/* Dark Mode Toggle */}
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={toggleDarkMode}
-            className="rounded-full"
-          >
-            {isDarkMode ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
-          </Button>
+        {/* User Presence */}
+        <Avatar className="h-8 w-8 border-2 border-blue-500">
+          <AvatarImage src="" />
+          <AvatarFallback className="bg-blue-600 text-white text-xs">2</AvatarFallback>
+        </Avatar>
 
-          {/* User Presence */}
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => showNotImplemented('User profile')}
-            className="rounded-full"
-          >
-            <User className="h-5 w-5" />
-          </Button>
-
-          {/* Settings Button */}
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => showNotImplemented('Settings')}
-            className="rounded-full"
-          >
-            <Settings className="h-5 w-5" />
-          </Button>
-        </div>
+        {/* Settings Button */}
+        <Button 
+          variant="ghost" 
+          size="icon"
+          onClick={() => showNotImplemented('Settings')}
+          className="rounded-full text-gray-300 hover:text-white hover:bg-white/10"
+        >
+          <Settings className="h-5 w-5" />
+        </Button>
       </div>
-    </header>
+    </div>
   );
 };
 
