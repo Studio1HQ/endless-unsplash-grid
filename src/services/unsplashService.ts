@@ -1,7 +1,7 @@
 
 // Create a random client ID for demo purposes
 // In production, you should use a proper Unsplash API key
-const DEMO_CLIENT_ID = 'UTOzFSCE3zv_yfKN8jtnVXPffTm1QjiOOFS60-U4JxY';
+const DEMO_CLIENT_ID = 'demo';
 
 interface UnsplashPhoto {
   id: string;

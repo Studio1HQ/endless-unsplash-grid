@@ -60,6 +60,7 @@ const MasonryGrid = () => {
   }, [page, loading, hasMore]);
 
   useEffect(() => {
+    console.log("page", page);
     loadImages();
   }, [page, loadImages]);
 
