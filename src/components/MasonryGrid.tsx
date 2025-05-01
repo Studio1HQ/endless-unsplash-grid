@@ -3,6 +3,7 @@ import Masonry from 'react-masonry-css';
 import { fetchUnsplashPhotos, UnsplashPhoto } from '../services/unsplashService';
 import ImageCard from './ImageCard';
 import { toast } from '@/components/ui/sonner';
+import { VeltComments } from '@veltdev/react';
 
 const breakpointColumnsObj = {
   default: 4,
@@ -70,35 +71,38 @@ const MasonryGrid = () => {
   }, [page, loadImages]);
 
   return (
-    <div className="container px-4 mx-auto mt-4">
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="masonry-grid"
-        columnClassName="masonry-grid-column"
-      >
-        {photos.map((photo, index) => {
-          if (photos.length === index + 1) {
-            return (
-              <div ref={lastImageRef} key={photo.id}>
-                <ImageCard photo={photo} />
-              </div>
-            );
-          } else {
-            return <ImageCard key={photo.id} photo={photo} />;
-          }
-        })}
-      </Masonry>
+    <>
+      <VeltComments />
+      <div className="container px-4 mx-auto mt-4">
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="masonry-grid"
+          columnClassName="masonry-grid-column"
+        >
+          {photos.map((photo, index) => {
+            if (photos.length === index + 1) {
+              return (
+                <div ref={lastImageRef} key={photo.id}>
+                  <ImageCard photo={photo} />
+                </div>
+              );
+            } else {
+              return <ImageCard key={photo.id} photo={photo} />;
+            }
+          })}
+        </Masonry>
 
-      {loading && (
-        <div className="loading-spinner py-8 flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-        </div>
-      )}
-      
-      {!hasMore && photos.length > 0 && (
-        <p className="text-center text-gray-500 py-8">You've reached the end!</p>
-      )}
-    </div>
+        {loading && (
+          <div className="loading-spinner py-8 flex justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          </div>
+        )}
+        
+        {!hasMore && photos.length > 0 && (
+          <p className="text-center text-gray-500 py-8">You've reached the end!</p>
+        )}
+      </div>
+    </>
   );
 };
 

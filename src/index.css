@@ -1,7 +1,32 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Velt custom styling */
+:root {
+  --velt-primary-color: theme('colors.blue.500');
+  --velt-primary-hover-color: theme('colors.blue.600');
+  --velt-avatar-border-color: rgba(255, 255, 255, 0.2);
+  --velt-z-index: 40;
+}
+
+.dark {
+  --velt-primary-color: theme('colors.blue.400');
+  --velt-primary-hover-color: theme('colors.blue.500');
+}
+
+/* Make Velt components match our theme */
+.velt-comment-pin {
+  @apply shadow-md;
+}
+
+.velt-presence-user-list {
+  @apply bg-black/80 backdrop-blur-md border border-white/10 rounded-lg shadow-lg p-2;
+}
+
+.velt-cursor-user-name {
+  @apply bg-black/80 backdrop-blur-sm text-white rounded-md px-2 py-1 text-xs;
+}
 
 @layer base {
   :root {
