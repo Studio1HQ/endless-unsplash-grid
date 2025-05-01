@@ -18,8 +18,33 @@ const MasonryGrid = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
   const loadingRef = useRef(false);
+  
+  // Check if dark mode is enabled by looking at the HTML element class
+  useEffect(() => {
+    const checkDarkMode = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+    };
+    
+    // Check initial state
+    checkDarkMode();
+    
+    // Set up a mutation observer to detect class changes on the HTML element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          checkDarkMode();
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { attributes: true });
+    
+    return () => observer.disconnect();
+  }, []);
   
   const loadImages = useCallback(async () => {
     if (loadingRef.current || !hasMore) return;
@@ -72,7 +97,7 @@ const MasonryGrid = () => {
 
   return (
     <>
-      <VeltComments />
+      <VeltComments darkMode={isDarkMode} />
       <div className="container px-4 mx-auto mt-4">
         <Masonry
           breakpointCols={breakpointColumnsObj}

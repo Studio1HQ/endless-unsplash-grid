@@ -56,7 +56,7 @@ const Toolbar = ({ className }: ToolbarProps) => {
       {/* Comment Tool */}
       {commentsEnabled && (
         <div className="fixed bottom-20 right-4 z-50">
-          <VeltCommentTool />
+          <VeltCommentTool darkMode={isDarkMode} />
         </div>
       )}
       
