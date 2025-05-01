@@ -18,8 +18,9 @@ interface UnsplashPhoto {
 
 export async function fetchUnsplashPhotos(page = 1, perPage = 10): Promise<UnsplashPhoto[]> {
   try {
+    // Use the /photos endpoint with specific ordering to get consistent results
     const response = await fetch(
-      `https://api.unsplash.com/photos/random?client_id=${UNSPLASH_CLIENT_ID}&count=${perPage}`,
+      `https://api.unsplash.com/photos?client_id=${UNSPLASH_CLIENT_ID}&page=${page}&per_page=${perPage}&order_by=popular`,
       {
         headers: {
           'Accept-Version': 'v1',
