@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -33,22 +34,6 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
@@ -79,14 +64,6 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -94,8 +71,98 @@
   * {
     @apply border-border;
   }
-
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Masonry Grid Styles */
+.masonry-grid {
+  display: flex;
+  margin-left: -16px; /* Adjust the gutter size */
+  width: auto;
+}
+
+.masonry-grid-column {
+  padding-left: 16px; /* Adjust the gutter size */
+  background-clip: padding-box;
+}
+
+.masonry-grid-item {
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.masonry-grid-item:hover {
+  transform: translateY(-4px);
+}
+
+.masonry-grid-item img {
+  width: 100%;
+  display: block;
+  height: auto;
+  object-fit: cover;
+}
+
+.toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.toolbar.dark {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+}
+
+.toolbar.light {
+  background-color: rgba(255, 255, 255, 0.85);
+  color: black;
+}
+
+/* Infinite Scroll Loading Indicator */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+/* Image Loading Animation */
+@keyframes imageLoad {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.image-loaded {
+  animation: imageLoad 0.3s ease forwards;
+}
+
+/* Skeleton Loading */
+.skeleton-loader {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 12px;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
