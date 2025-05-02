@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Settings, MessageSquare, Sun, Moon } from 'lucide-react';
+import { MessageSquare, Sun, Moon, Globe, Info } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { VeltPresence, useVeltClient, VeltCommentTool } from '@veltdev/react';
@@ -10,16 +10,59 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import UserSwitcher from './UserSwitcher';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
 
 interface ToolbarProps {
   className?: string;
 }
 
+const environments = [
+  { name: "Development", id: "dev" },
+  { name: "Staging", id: "staging" },
+  { name: "Production", id: "prod" }
+];
+
+// Define type for document metadata
+interface DocumentMetadata {
+  documentName?: string;
+  environment?: string;
+  organizationId?: string;
+  [key: string]: string | number | boolean | undefined;
+}
+
 const Toolbar = ({ className }: ToolbarProps) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [commentsEnabled, setCommentsEnabled] = useState(false);
+  const [currentEnv, setCurrentEnv] = useState(environments[0]);
+  const [documentMetadata, setDocumentMetadata] = useState<DocumentMetadata | null>(null);
+  const [showContextDialog, setShowContextDialog] = useState(false);
   const { toast } = useToast();
   const { client } = useVeltClient();
+
+  // Get document metadata on component mount
+  useEffect(() => {
+    if (client) {
+      const subscription = client.getDocumentMetadata().subscribe((metadata: DocumentMetadata) => {
+        setDocumentMetadata(metadata);
+      });
+      
+      return () => subscription.unsubscribe();
+    }
+  }, [client]);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
@@ -42,12 +85,22 @@ const Toolbar = ({ className }: ToolbarProps) => {
     });
   };
 
-  // Show a feature not implemented message
-  const showNotImplemented = (feature: string) => {
+  // Switch environment
+  const switchEnvironment = (env: typeof environments[0]) => {
+    setCurrentEnv(env);
+    
+    // If using Velt client, we could set a different document ID based on environment
+    if (client) {
+      const documentId = `endless-unsplash-gallery-${env.id}`;
+      client.setDocument(documentId, {
+        documentName: `Endless Unsplash Gallery (${env.name})`,
+        environment: env.id
+      });
+    }
+    
     toast({
-      title: `${feature} feature coming soon!`,
-      description: "This functionality will be implemented in a future update.",
-      duration: 2000,
+      title: `Switched to ${env.name} environment`,
+      duration: 1500,
     });
   };
 
@@ -107,6 +160,81 @@ const Toolbar = ({ className }: ToolbarProps) => {
             )}
           </Button>
 
+          {/* Environment Switcher */}
+          <DropdownMenu>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="rounded-full text-gray-300 hover:text-white hover:bg-white/10"
+                  >
+                    <Globe className="h-5 w-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>Switch environment</p>
+              </TooltipContent>
+            </Tooltip>
+            <DropdownMenuContent align="center" className="w-40">
+              {environments.map((env) => (
+                <DropdownMenuItem 
+                  key={env.id}
+                  onClick={() => switchEnvironment(env)}
+                  className={cn(
+                    "cursor-pointer",
+                    currentEnv.id === env.id && "font-bold bg-muted"
+                  )}
+                >
+                  {env.name}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Context Information */}
+          <Dialog open={showContextDialog} onOpenChange={setShowContextDialog}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DialogTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="rounded-full text-gray-300 hover:text-white hover:bg-white/10"
+                  >
+                    <Info className="h-5 w-5" />
+                  </Button>
+                </DialogTrigger>
+              </TooltipTrigger>
+              <TooltipContent side="top">
+                <p>View document context</p>
+              </TooltipContent>
+            </Tooltip>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Document Context</DialogTitle>
+              </DialogHeader>
+              <div className="mt-4">
+                <h3 className="text-sm font-medium mb-2">Current Environment</h3>
+                <div className="bg-muted p-2 rounded mb-4">
+                  <p className="text-sm">{currentEnv.name}</p>
+                </div>
+                
+                <h3 className="text-sm font-medium mb-2">Document Metadata</h3>
+                <div className="bg-muted p-2 rounded overflow-auto max-h-40">
+                  <pre className="text-xs">
+                    {JSON.stringify(documentMetadata, null, 2)}
+                  </pre>
+                </div>
+              </div>
+              <DialogClose asChild>
+                <Button className="mt-4 w-full" variant="default">Close</Button>
+              </DialogClose>
+            </DialogContent>
+          </Dialog>
+
           {/* User Presence */}
           <div className="flex items-center mx-1">
             <VeltPresence />
@@ -114,16 +242,6 @@ const Toolbar = ({ className }: ToolbarProps) => {
 
           {/* User Switcher */}
           <UserSwitcher />
-
-          {/* Settings Button */}
-          <Button 
-            variant="ghost" 
-            size="icon"
-            onClick={() => showNotImplemented('Settings')}
-            className="rounded-full text-gray-300 hover:text-white hover:bg-white/10"
-          >
-            <Settings className="h-5 w-5" />
-          </Button>
         </div>
       </div>
     </>

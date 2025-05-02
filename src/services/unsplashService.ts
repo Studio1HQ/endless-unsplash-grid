@@ -16,7 +16,7 @@ interface UnsplashPhoto {
   };
 }
 
-export async function fetchUnsplashPhotos(page = 1, perPage = 10): Promise<UnsplashPhoto[]> {
+export async function fetchUnsplashPhotos(page = 1, perPage = 50): Promise<UnsplashPhoto[]> {
   try {
     // Use the /photos endpoint with specific ordering to get consistent results
     const response = await fetch(
