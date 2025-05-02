@@ -1,10 +1,8 @@
 import { VeltProvider as BaseVeltProvider, useVeltClient } from "@veltdev/react";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 
-// Organization ID for Velt (normally this would be in your env variables)
 const ORGANIZATION_ID = "default-org";
 
-// Sample users for testing - these would normally come from your auth system
 const USERS = [
   {
     id: "user1",
@@ -34,7 +32,6 @@ export const useUser = () => useContext(UserContext);
 export function VeltProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<typeof USERS[0] | null>(null);
   
-  // Load user from localStorage or default to first user
   useEffect(() => {
     const savedUserId = localStorage.getItem("currentUserId");
     const savedUser = savedUserId 

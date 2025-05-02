@@ -55,7 +55,12 @@ const Toolbar = ({ className }: ToolbarProps) => {
     <>
       {/* Comment Tool */}
       {commentsEnabled && (
-        <div className="fixed bottom-20 right-4 z-50">
+        <div className={cn(
+          "fixed bottom-20 right-4 z-50 size-14 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-200",
+          isDarkMode 
+            ? "bg-gray-700/90 border-2 border-blue-400/50 hover:bg-gray-600" 
+            : "bg-white/90 border-2 border-blue-500/50 hover:bg-white shadow-md"
+        )}>
           <VeltCommentTool darkMode={isDarkMode} />
         </div>
       )}
