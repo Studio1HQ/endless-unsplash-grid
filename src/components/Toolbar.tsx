@@ -45,13 +45,18 @@ interface DocumentMetadata {
 }
 
 const Toolbar = ({ className }: ToolbarProps) => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [commentsEnabled, setCommentsEnabled] = useState(false);
   const [currentEnv, setCurrentEnv] = useState(environments[0]);
   const [documentMetadata, setDocumentMetadata] = useState<DocumentMetadata | null>(null);
   const [showContextDialog, setShowContextDialog] = useState(false);
   const { toast } = useToast();
   const { client } = useVeltClient();
+
+  // Apply dark mode by default
+  useEffect(() => {
+    document.documentElement.classList.add('dark');
+  }, []);
 
   // Get document metadata on component mount
   useEffect(() => {
