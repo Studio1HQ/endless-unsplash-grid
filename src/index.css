@@ -28,6 +28,16 @@
   @apply bg-black/80 backdrop-blur-sm text-white rounded-md px-2 py-1 text-xs;
 }
 
+/* Customize user presence avatars to match Vercel */
+.velt-presence-avatar {
+  @apply border-2 border-black !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.velt-presence {
+  --velt-presence-avatar-size: 26px;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -184,4 +194,3 @@
     background-position: -200% 0;
   }
 }
-

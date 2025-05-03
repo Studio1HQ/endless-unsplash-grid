@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useUser } from '@/lib/velt';
 import {
@@ -38,17 +39,14 @@ const UserSwitcher = () => {
   return (
     <>
       <Button 
-        variant="outline"
+        variant="ghost"
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10"
+        className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-0 mx-1.5 h-9 w-9 flex items-center justify-center"
       >
-        <Avatar className="h-6 w-6">
+        <Avatar className="h-7 w-7 border border-white/20">
           <AvatarImage src={user?.profileUrl} alt={user?.name} />
           <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
         </Avatar>
-        <span className="text-sm font-medium truncate max-w-[100px] text-white">
-          {user?.name}
-        </span>
       </Button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -62,7 +60,7 @@ const UserSwitcher = () => {
           
           <div className="flex flex-col gap-4 py-4">
             <div className="flex items-center">
-              <Avatar className="h-12 w-12 mr-4">
+              <Avatar className="h-12 w-12 mr-4 border border-white/20">
                 <AvatarImage src={user?.profileUrl} alt={user?.name} />
                 <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
               </Avatar>
@@ -85,4 +83,4 @@ const UserSwitcher = () => {
   );
 };
 
-export default UserSwitcher; 
+export default UserSwitcher;
