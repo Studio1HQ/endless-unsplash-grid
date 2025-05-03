@@ -53,19 +53,7 @@ const Toolbar = ({ className }: ToolbarProps) => {
       <VeltComments darkMode={isDarkMode} />
       
       {/* Comments Sidebar */}
-      <VeltCommentsSidebar darkMode={isDarkMode} />
-      
-      {/* Comment Tool */}
-      {commentsEnabled && (
-        <div className={cn(
-          "fixed bottom-20 right-4 z-50 size-14 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center transition-all duration-200",
-          isDarkMode 
-            ? "bg-gray-700/90 border-2 border-blue-400/50 hover:bg-gray-600" 
-            : "bg-white/90 border-2 border-blue-500/50 hover:bg-white shadow-md"
-        )}>
-          <VeltCommentTool darkMode={isDarkMode} />
-        </div>
-      )}
+      <VeltCommentsSidebar darkMode={isDarkMode} /> 
       
       <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
         <div 
@@ -78,20 +66,23 @@ const Toolbar = ({ className }: ToolbarProps) => {
           {/* Comments Button */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={toggleComments}
-                className={cn(
-                  "rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0",
-                  commentsEnabled && "text-white bg-white/10"
-                )}
-              >
-                <MessageCircle className="h-5 w-5" strokeWidth={1.5} />
-              </Button>
+              <div className="rounded-full h-8 w-8 flex items-center justify-center">
+                <VeltCommentTool darkMode={isDarkMode}>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className={cn(
+                      "rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0",
+                      commentsEnabled && "text-white bg-white/10"
+                    )}
+                  >
+                    <MessageCircle className="h-5 w-5" strokeWidth={1.5} />
+                  </Button>
+                </VeltCommentTool>
+              </div>
             </TooltipTrigger>
             <TooltipContent side="top">
-              <p>Toggle comments</p>
+              <p>Add comments</p>
             </TooltipContent>
           </Tooltip>
 
