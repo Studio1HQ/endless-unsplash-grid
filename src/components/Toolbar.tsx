@@ -1,10 +1,9 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, Layers, Share2, Eye, Menu } from 'lucide-react';
+import { MessageCircle, Layers, Share2, Eye, Menu, Inbox } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
-import { VeltPresence, useVeltClient, VeltCommentTool } from '@veltdev/react';
+import { VeltPresence, useVeltClient, VeltCommentTool, VeltComments, VeltCommentsSidebar, VeltSidebarButton } from '@veltdev/react';
 import {
   Tooltip,
   TooltipContent,
@@ -50,6 +49,12 @@ const Toolbar = ({ className }: ToolbarProps) => {
 
   return (
     <>
+      {/* Enable Comments site-wide */}
+      <VeltComments darkMode={isDarkMode} />
+      
+      {/* Comments Sidebar */}
+      <VeltCommentsSidebar darkMode={isDarkMode} />
+      
       {/* Comment Tool */}
       {commentsEnabled && (
         <div className={cn(
@@ -90,19 +95,25 @@ const Toolbar = ({ className }: ToolbarProps) => {
             </TooltipContent>
           </Tooltip>
 
-          {/* Stack Button */}
+          {/* Comments Sidebar Button */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                className="rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0"
-              >
-                <Layers className="h-5 w-5" strokeWidth={1.5} />
-              </Button>
+              <div className="rounded-full h-8 w-8 flex items-center justify-center">
+                <VeltSidebarButton>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className={cn(
+                      "rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0"
+                    )}
+                  >
+                    <Inbox className="h-5 w-5" strokeWidth={1.5} />
+                  </Button>
+                </VeltSidebarButton>
+              </div>
             </TooltipTrigger>
             <TooltipContent side="top">
-              <p>View stack</p>
+              <p>View comments</p>
             </TooltipContent>
           </Tooltip>
 
