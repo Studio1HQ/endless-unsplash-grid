@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, Layers, Share2, Menu, Inbox } from 'lucide-react';
+import { MessageCircle, Layers, Share2, Menu, Inbox, Sun, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { VeltPresence, useVeltClient, VeltCommentTool, VeltComments, VeltCommentsSidebar, VeltSidebarButton } from '@veltdev/react';
@@ -10,7 +9,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Switch } from "@/components/ui/switch";
 import UserSwitcher from './UserSwitcher';
 
 interface ToolbarProps {
@@ -112,15 +110,32 @@ const Toolbar = ({ className }: ToolbarProps) => {
 
           <div className="h-5 w-px bg-white/50"></div>
 
-          {/* Dark Mode Toggle Switch */}
+          {/* Custom Theme Toggle Button */}
           <Tooltip>
             <TooltipTrigger asChild>
               <div className="flex items-center">
-                <Switch
-                  checked={isDarkMode}
-                  onCheckedChange={toggleDarkMode}
-                  className="h-4 w-7 data-[state=checked]:bg-blue-500"
-                />
+                <button
+                  onClick={toggleDarkMode}
+                  className={cn(
+                    "relative rounded-full w-10 h-5 flex items-center transition-colors duration-300",
+                    isDarkMode ? "bg-blue-500/30" : "bg-yellow-500/30"
+                  )}
+                  aria-label="Toggle theme"
+                >
+                  <span 
+                    className={cn(
+                      "absolute left-0.5 flex items-center justify-center w-4 h-4 rounded-full transition-transform duration-300 shadow-sm",
+                      isDarkMode 
+                        ? "bg-blue-500 translate-x-5" 
+                        : "bg-yellow-500 translate-x-0"
+                    )}
+                  >
+                    {isDarkMode 
+                      ? <Moon className="h-2.5 w-2.5 text-white" strokeWidth={2} /> 
+                      : <Sun className="h-2.5 w-2.5 text-white" strokeWidth={2} />
+                    }
+                  </span>
+                </button>
               </div>
             </TooltipTrigger>
             <TooltipContent side="top">
