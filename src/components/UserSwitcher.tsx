@@ -17,8 +17,16 @@ const ORGANIZATION_ID = "default-org";
 
 // Mock users for dropdown display
 const mockUsers = [
-  { id: "user-1", name: "Bread", profileUrl: "https://github.com/shadcn.png", online: true },
-  { id: "user-2", name: "Felix", profileUrl: "https://github.com/felixvonstudsinske.png", online: true },
+  {
+    id: "user1",
+    name: "John Doe",
+    profileUrl: "https://randomuser.me/api/portraits/men/62.jpg"
+  },
+  {
+    id: "user2",
+    name: "Jane Smith",
+    profileUrl: "https://randomuser.me/api/portraits/women/2.jpg"
+  }
 ];
 
 const UserSwitcher = () => {
@@ -49,7 +57,7 @@ const UserSwitcher = () => {
             <AvatarImage src={user?.profileUrl} alt={user?.name} />
             <AvatarFallback className="text-xs">{user?.name?.charAt(0)}</AvatarFallback>
           </Avatar>
-          <ChevronDown className="h-3 w-3 text-gray-400" strokeWidth={2} />
+          <ChevronDown className="h-4 w-4 mx-1.5 text-gray-400" strokeWidth={2} />
         </div>
       </DropdownMenuTrigger>
       
@@ -65,9 +73,9 @@ const UserSwitcher = () => {
                 <AvatarImage src={mockUser.profileUrl} alt={mockUser.name} />
                 <AvatarFallback>{mockUser.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              {mockUser.online && (
+              {/* {mockUser.online && (
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-white dark:border-black/90"></span>
-              )}
+              )} */}
             </div>
             <span className="flex-1 text-sm font-medium text-gray-800 dark:text-gray-100">
               {mockUser.name}
