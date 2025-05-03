@@ -1,7 +1,7 @@
-
 import { useState } from 'react';
 import { UnsplashPhoto } from '../services/unsplashService';
 import { cn } from '@/lib/utils';
+import { VeltCommentTool, VeltCommentBubble } from '@veltdev/react';
 
 interface ImageCardProps {
   photo: UnsplashPhoto;
@@ -23,13 +23,18 @@ const ImageCard = ({ photo, className }: ImageCardProps) => {
   // Calculate aspect ratio to maintain proper size in Masonry layout
   const aspectRatio = photo.height / photo.width;
   const paddingTop = `${aspectRatio * 100}%`;
+  
+  // Create a unique ID for each image based on the photo ID
+  const imageId = `image-${photo.id}`;
 
   return (
     <div 
+      id={imageId}
       className={cn(
-        "masonry-grid-item rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-xl",
+        "masonry-grid-item rounded-lg overflow-hidden shadow-md transition-transform duration-300 hover:shadow-xl relative",
         className
       )}
+      data-velt-target-comment-element-id={imageId}
     >
       {!isLoaded && !isError && (
         <div 
@@ -58,6 +63,21 @@ const ImageCard = ({ photo, className }: ImageCardProps) => {
 
       <div className="p-2 text-xs opacity-80 absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent text-white">
         Photo by {photo.user.name}
+      </div>
+      
+      {/* Comment tool positioned at the top right corner of the image */}
+      <div className="absolute top-2 right-2 z-10">
+        <VeltCommentTool 
+          targetElementId={imageId}
+        />
+      </div>
+      
+      {/* Comment bubble to show comment count */}
+      <div className="absolute top-2 left-2 z-10">
+        <VeltCommentBubble 
+          targetElementId={imageId}
+          commentCountType="total"
+        />
       </div>
     </div>
   );
