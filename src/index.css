@@ -43,11 +43,11 @@
 
 /* Fix avatar spacing in presence indicators */
 .velt-presence .velt-presence-avatars-container {
-  gap: 4px !important;
+  gap: 8px !important;
 }
 
 .velt-presence .velt-presence-user-item {
-  margin: 0 2px !important;
+  margin: 0 4px !important;
 }
 
 @layer base {

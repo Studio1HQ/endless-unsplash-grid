@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useUser } from '@/lib/velt';
 import {
@@ -41,7 +40,7 @@ const UserSwitcher = () => {
       <Button 
         variant="ghost"
         onClick={() => setOpen(true)}
-        className="h-8 w-8 p-0 rounded-full bg-transparent hover:bg-white/10 transition-colors"
+        className="h-8 w-8 p-0 rounded-full bg-transparent hover:bg-white/10 transition-colors overflow-hidden ring-2 ring-green-500/50"
         aria-label="Switch user"
       >
         <Avatar className="h-8 w-8">

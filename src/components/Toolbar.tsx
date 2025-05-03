@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { MessageCircle, Layers, Share2, Eye, Menu } from 'lucide-react';
@@ -65,7 +64,7 @@ const Toolbar = ({ className }: ToolbarProps) => {
       <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
         <div 
           className={cn(
-            "flex items-center gap-2 px-3 py-2 rounded-full bg-black backdrop-blur-md border border-white/10 shadow-lg",
+            "flex items-center gap-3 px-3 py-2 rounded-full bg-black backdrop-blur-md border border-white/10 shadow-lg",
             isDarkMode ? "dark" : "",
             className
           )}
@@ -123,9 +122,17 @@ const Toolbar = ({ className }: ToolbarProps) => {
             </TooltipContent>
           </Tooltip>
 
-          {/* User Presence with proper spacing */}
-          <div className="flex items-center gap-1 mx-1">
+          {/* User Presence with more spacing between icons */}
+          <div className="velt-presence flex items-center">
             <VeltPresence />
+          </div>
+
+          {/* Vertical divider */}
+          <div className="h-5 w-px bg-white/10"></div>
+
+          {/* User Switcher */}
+          <div>
+            <UserSwitcher />
           </div>
 
           {/* Share Button */}
