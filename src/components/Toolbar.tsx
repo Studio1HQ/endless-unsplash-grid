@@ -108,6 +108,8 @@ const Toolbar = ({ className }: ToolbarProps) => {
             </TooltipContent>
           </Tooltip>
 
+          <div className="h-5 w-px bg-white/50"></div>
+
           {/* Dark Mode Toggle */}
           <Tooltip>
             <TooltipTrigger asChild>
@@ -125,13 +127,15 @@ const Toolbar = ({ className }: ToolbarProps) => {
             </TooltipContent>
           </Tooltip>
 
+          <div className="h-5 w-px bg-white/50"></div>
+
           {/* User Presence with more spacing between icons */}
           <div className="velt-presence flex items-center">
             <VeltPresence />
           </div>
 
           {/* Vertical divider */}
-          <div className="h-5 w-px bg-white/10"></div>
+          <div className="h-5 w-px bg-white/50"></div>
 
           {/* User Switcher */}
           <div>
