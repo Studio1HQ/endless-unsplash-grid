@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, SquareStack, Share, Eye } from 'lucide-react';
+import { MessageCircle, Layers, Share2, Eye, Menu } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { VeltPresence, useVeltClient, VeltCommentTool } from '@veltdev/react';
@@ -14,14 +14,6 @@ import UserSwitcher from './UserSwitcher';
 
 interface ToolbarProps {
   className?: string;
-}
-
-// Define type for document metadata
-interface DocumentMetadata {
-  documentName?: string;
-  environment?: string;
-  organizationId?: string;
-  [key: string]: string | number | boolean | undefined;
 }
 
 const Toolbar = ({ className }: ToolbarProps) => {
@@ -73,7 +65,7 @@ const Toolbar = ({ className }: ToolbarProps) => {
       <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
         <div 
           className={cn(
-            "flex items-center gap-0 px-1 py-1.5 rounded-full bg-[#111111] backdrop-blur-md border border-white/10 shadow-lg",
+            "flex items-center gap-2 px-3 py-2 rounded-full bg-black backdrop-blur-md border border-white/10 shadow-lg",
             isDarkMode ? "dark" : "",
             className
           )}
@@ -86,11 +78,11 @@ const Toolbar = ({ className }: ToolbarProps) => {
                 size="icon"
                 onClick={toggleComments}
                 className={cn(
-                  "rounded-full text-gray-300 hover:text-white hover:bg-white/10 mx-1",
-                  commentsEnabled && "text-blue-400 bg-white/10"
+                  "rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0",
+                  commentsEnabled && "text-white bg-white/10"
                 )}
               >
-                <MessageSquare className="h-5 w-5" />
+                <MessageCircle className="h-5 w-5" strokeWidth={1.5} />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top">
@@ -104,9 +96,9 @@ const Toolbar = ({ className }: ToolbarProps) => {
               <Button 
                 variant="ghost" 
                 size="icon"
-                className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 mx-1"
+                className="rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0"
               >
-                <SquareStack className="h-5 w-5" />
+                <Layers className="h-5 w-5" strokeWidth={1.5} />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top">
@@ -121,9 +113,9 @@ const Toolbar = ({ className }: ToolbarProps) => {
                 variant="ghost" 
                 size="icon"
                 onClick={toggleDarkMode}
-                className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 mx-1"
+                className="rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0"
               >
-                <Eye className="h-5 w-5" />
+                <Eye className="h-5 w-5" strokeWidth={1.5} />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top">
@@ -131,16 +123,10 @@ const Toolbar = ({ className }: ToolbarProps) => {
             </TooltipContent>
           </Tooltip>
 
-          {/* Separator */}
-          <div className="h-6 w-px bg-gray-600 mx-1.5"></div>
-
           {/* User Presence with proper spacing */}
-          <div className="flex items-center -space-x-1 mx-1.5">
+          <div className="flex items-center gap-1 mx-1">
             <VeltPresence />
           </div>
-
-          {/* Separator */}
-          <div className="h-6 w-px bg-gray-600 mx-1.5"></div>
 
           {/* Share Button */}
           <Tooltip>
@@ -148,9 +134,9 @@ const Toolbar = ({ className }: ToolbarProps) => {
               <Button 
                 variant="ghost" 
                 size="icon"
-                className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 mx-1"
+                className="rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0"
               >
-                <Share className="h-5 w-5" />
+                <Share2 className="h-5 w-5" strokeWidth={1.5} />
               </Button>
             </TooltipTrigger>
             <TooltipContent side="top">
@@ -158,8 +144,21 @@ const Toolbar = ({ className }: ToolbarProps) => {
             </TooltipContent>
           </Tooltip>
 
-          {/* User Switcher */}
-          <UserSwitcher />
+          {/* Menu Button */}
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className="rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0"
+              >
+                <Menu className="h-5 w-5" strokeWidth={1.5} />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="top">
+              <p>Menu</p>
+            </TooltipContent>
+          </Tooltip>
         </div>
       </div>
     </>

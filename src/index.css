@@ -30,12 +30,24 @@
 
 /* Customize user presence avatars to match Vercel */
 .velt-presence-avatar {
-  @apply border-2 border-black !important;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+  @apply border-2 border-[#0abb53] !important;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
+/* Make sure avatars are properly spaced */
 .velt-presence {
-  --velt-presence-avatar-size: 26px;
+  --velt-presence-avatar-size: 28px;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+/* Fix avatar spacing in presence indicators */
+.velt-presence .velt-presence-avatars-container {
+  gap: 4px !important;
+}
+
+.velt-presence .velt-presence-user-item {
+  margin: 0 2px !important;
 }
 
 @layer base {

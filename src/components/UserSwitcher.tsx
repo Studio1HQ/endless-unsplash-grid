@@ -41,11 +41,12 @@ const UserSwitcher = () => {
       <Button 
         variant="ghost"
         onClick={() => setOpen(true)}
-        className="rounded-full text-gray-300 hover:text-white hover:bg-white/10 p-0 mx-1.5 h-9 w-9 flex items-center justify-center"
+        className="h-8 w-8 p-0 rounded-full bg-transparent hover:bg-white/10 transition-colors"
+        aria-label="Switch user"
       >
-        <Avatar className="h-7 w-7 border border-white/20">
+        <Avatar className="h-8 w-8">
           <AvatarImage src={user?.profileUrl} alt={user?.name} />
-          <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+          <AvatarFallback className="text-xs">{user?.name?.charAt(0)}</AvatarFallback>
         </Avatar>
       </Button>
 
