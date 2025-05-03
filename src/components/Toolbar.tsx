@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { MessageCircle, Layers, Share2, Eye, Menu, Inbox } from 'lucide-react';
+import { MessageCircle, Layers, Share2, Menu, Inbox } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { VeltPresence, useVeltClient, VeltCommentTool, VeltComments, VeltCommentsSidebar, VeltSidebarButton } from '@veltdev/react';
@@ -9,6 +10,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Switch } from "@/components/ui/switch";
 import UserSwitcher from './UserSwitcher';
 
 interface ToolbarProps {
@@ -110,17 +112,16 @@ const Toolbar = ({ className }: ToolbarProps) => {
 
           <div className="h-5 w-px bg-white/50"></div>
 
-          {/* Dark Mode Toggle */}
+          {/* Dark Mode Toggle Switch */}
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button 
-                variant="ghost" 
-                size="icon"
-                onClick={toggleDarkMode}
-                className="rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0"
-              >
-                <Eye className="h-5 w-5" strokeWidth={1.5} />
-              </Button>
+              <div className="flex items-center">
+                <Switch
+                  checked={isDarkMode}
+                  onCheckedChange={toggleDarkMode}
+                  className="h-4 w-7 data-[state=checked]:bg-blue-500"
+                />
+              </div>
             </TooltipTrigger>
             <TooltipContent side="top">
               <p>Toggle theme</p>
