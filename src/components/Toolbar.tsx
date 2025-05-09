@@ -50,7 +50,7 @@ const Toolbar = ({ className }: ToolbarProps) => {
   return (
     <>
       {/* Enable Comments site-wide */}
-      <VeltComments darkMode={isDarkMode} />
+      <VeltComments darkMode={isDarkMode} popoverTriangleComponent={false} />
       
       {/* Comments Sidebar */}
       <VeltCommentsSidebar darkMode={isDarkMode} /> 
