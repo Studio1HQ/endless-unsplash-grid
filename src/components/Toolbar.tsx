@@ -63,29 +63,6 @@ const Toolbar = ({ className }: ToolbarProps) => {
             className
           )}
         >
-          {/* Comments Button */}
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <div className="rounded-full h-8 w-8 flex items-center justify-center">
-                <VeltCommentTool darkMode={isDarkMode}>
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    className={cn(
-                      "rounded-full text-gray-400 hover:text-white hover:bg-white/10 h-8 w-8 p-0",
-                      commentsEnabled && "text-white bg-white/10"
-                    )}
-                  >
-                    <MessageCircle className="h-5 w-5" strokeWidth={1.5} />
-                  </Button>
-                </VeltCommentTool>
-              </div>
-            </TooltipTrigger>
-            <TooltipContent side="top">
-              <p>Add comments</p>
-            </TooltipContent>
-          </Tooltip>
-
           {/* Comments Sidebar Button */}
           <Tooltip>
             <TooltipTrigger asChild>

@@ -97,7 +97,7 @@ const MasonryGrid = () => {
 
   return (
     <>
-      <VeltComments darkMode={isDarkMode} popoverMode={true} popoverTriangleComponent={true} />
+      <VeltComments darkMode={isDarkMode} popoverMode={true} />
       <div className="container px-4 mx-auto mt-4">
         <Masonry
           breakpointCols={breakpointColumnsObj}

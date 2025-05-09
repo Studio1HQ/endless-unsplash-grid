@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useUser } from '@/lib/velt';
 import { useVeltClient } from '@veltdev/react';
@@ -53,7 +52,7 @@ const UserSwitcher = () => {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <div className="flex items-center gap-1 px-1.5 py-1.5 rounded-full hover:bg-white/10 bg-white/5 backdrop-blur-sm border border-white/10 cursor-pointer">
-          <Avatar className="h-7 w-7 ring-2 ring-green-500">
+          <Avatar className="h-6 w-6 ring-2 ring-green-500">
             <AvatarImage src={user?.profileUrl} alt={user?.name} />
             <AvatarFallback className="text-xs">{user?.name?.charAt(0)}</AvatarFallback>
           </Avatar>
